@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "c07547c4-6980-4316-80e1-225d0340fbb1",
+		"name": "CRON-WORKER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AGREGAR TAREA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n        \"cron\": \"* * * * *\",\n        \"activa\":false,\n        \"receptores_estado\": [\n            {\n                \"activo\":false,\n                \"destinatarios\": [\n                    \"alexis.taberna@moorea.io\"\n                ],\n                \"en_copia\": [],\n                \"status\": \"ok\",\n                \"template\": {\n                    \"encabezado\": \"f'Proceso automatizado {args[0].month:02d} ({args[1]})'\",\n                    \"cuerpo\": \"f'Se ejecutaron correctamente los registros {args[2]} del mes {args[0].month:02d}'\"\n                }\n            }\n        ],\n        \"id\": \"otra_tarea\",\n        \"modulo_externo\": {\n            \"funcion\": \"tarea_de_prueba\",\n            \"modulo\": \"apps/services/funciones_service.py\",\n            \"argumentos\": [\n                \"'asd'\",\"'asd'\"\n            ]\n        }\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cron-worker-host}}/api/v1/tareas",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tareas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ACTUALIZAR TAREA",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cron\": \"0 9 18 * *\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cron-worker-host}}/api/v1/tareas/informe_tareas_mensual",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tareas",
+						"informe_tareas_mensual"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OBTENER TAREAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{cron-worker-host}}/api/v1/tareas",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tareas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CORRER TAREA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{cron-worker-host}}/api/v1/tareas/informe_tareas_mensual/run",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tareas",
+						"informe_tareas_mensual",
+						"run"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ALIVE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{cron-worker-host}}/alive",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"alive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VARIABLES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{cron-worker-host}}/vars",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"vars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BORRAR TAREA",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2b105771-a175-49f3-90bf-beb594e32788",
+						"exec": [
+							"postman.setEnvironmentVariable(\"id_tarea\", \"una_tarea\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{cron-worker-host}}/api/v1/tareas/{{id_tarea}}",
+					"host": [
+						"{{cron-worker-host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tareas",
+						"{{id_tarea}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

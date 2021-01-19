@@ -1,0 +1,10 @@
+# DEPENDENCIAS
+
+flask
+gunicorn
+requests
+bson
+psutil
+netifaces
+APScheduler
+stringcase

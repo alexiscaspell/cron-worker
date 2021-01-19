@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  cron-worker:
+    # network_mode: bridge
+    image: registry.leafnoise.io/phantom/cron-worker
+    #build: .
+    # command: python app.py
+    environment:
+      # GUNICORN
+      - CRON_WORKER_PYTHON_PORT=5000
+
+      # LOGS
+      - CRON_WORKER_NIVEL_LOGS=INFO
+      - CRON_WORKER_DIRECTORIO_LOGS=logs/
+
+      # APP
+      - POOL_SIZE_DEFAULT=50
+      - MAX_OVERFLOW_DEFAULT=100
+      - DIRECTORY_FILES=files/
+      - CRON_WORKER_ENVIRONMENT_MODE=development
+      - CRON_WORKER_EMAIL_ENVIADOR=phantom.bot.moorea@gmail.com
+      - CRON_WORKER_EMAIL_USER=phantom.bot.moorea@gmail.com
+      - CRON_WORKER_EMAIL_PASS=phantom456
+
+    restart: always
+    volumes:
+      - ./logs:/usr/src/logs
+      - ./files:/usr/src/files
+      
+    ports:
+      - 5000:5000

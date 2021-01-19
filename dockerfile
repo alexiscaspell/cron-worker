@@ -1,0 +1,45 @@
+FROM python:3.8
+
+ARG TAG=local
+
+WORKDIR /usr/src/
+
+
+# VARIABLES PREDEFINIDAS
+ENV CRON_WORKER_VERSION=${TAG}
+
+ENV CRON_WORKER_PYTHON_HOST=0.0.0.0
+ENV CRON_WORKER_PYTHON_PORT=5000
+ENV CRON_WORKER_PYTHON_GUNICORN_WORKERS=1
+ENV CRON_WORKER_PYTHON_GUNICORN_CONNECTIONS=1000
+ENV CRON_WORKER_PYTHON_NOMBRE_APP=app
+ENV CRON_WORKER_PYTHON_NOMBRE_FUNCION_APP=app
+
+
+# EJECUCION
+CMD gunicorn \
+    -b ${CRON_WORKER_PYTHON_HOST}:${CRON_WORKER_PYTHON_PORT} \
+    --reload \
+    --workers=${CRON_WORKER_PYTHON_GUNICORN_WORKERS} \
+    --worker-connections=${CRON_WORKER_PYTHON_GUNICORN_CONNECTIONS} \
+    ${CRON_WORKER_PYTHON_NOMBRE_APP}:${CRON_WORKER_PYTHON_NOMBRE_FUNCION_APP}
+
+EXPOSE ${CRON_WORKER_PYTHON_PORT}
+
+
+# DEPENDENCIAS
+RUN pip install compile --upgrade pip
+
+COPY ./requirements.txt .
+COPY ./files ./files
+
+RUN pip install -r requirements.txt
+RUN rm requirements.txt
+
+
+# COMPILACION
+COPY ./apps ./src/apps
+COPY ./app.py ./src
+
+RUN python -m compile -b -f -o ./dist ./src
+RUN mv -f ./dist/src/* .
