@@ -76,6 +76,6 @@ def generar_informe(tarea,tablero_tareas,fecha):
 
 ```
 * Toda funcion como primer parametro recibira la tarea del tipo **TareaProgramada** , este objeto contiene toda la info anteriormente mencionada.
-* Como retorno de la funcion, en args siempre se encontrara como primer elemento la fecha y hora de ejecucion, como segundo parametro el status de la tarea ([revisar **status** de tarea](#RECEPTORES%20DE%20ESTADO)) y luego el resto de los elementos de la lista retornada en la funcion.
+* Como retorno de la funcion, en args siempre se encontrara como primer elemento la fecha y hora de ejecucion, como segundo parametro el status de la tarea ([revisar **status** de tarea](#receptores-de-estado)) y luego el resto de los elementos de la lista retornada en la funcion.
 
 
