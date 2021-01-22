@@ -68,21 +68,12 @@ def generar_informe(tarea,tablero_tareas,fecha):
 - **argumentos**: Es una lista con argumentos que se le pasaran a la funcion, estos se evaluan como codigo python por ende si se quiere pasar por ej. un string **"soy un string"** se tiene que pasar como **"'soy un string'"**; Ademas se pueden llamar a funciones siempre y cuando esten dentro del archivo de **modulo** o incluidas en sus imports.
 
 ## ACLARACIONES
-* Cuando se define una funcion nueva que se llamara desde una tarea siempre se tiene que agregar al final de la tarea:
+* Cuando se define una funcion nueva que se llamara desde una tarea siempre se tiene que retornar lo siguiente:
 ```
-#LA TAREA SALIO OK!
-status_tarea=StatusTarea.ok
-receptor = tarea.obtener_receptor(status_tarea)
+    ...
+    ...
+    return True,una_lista_de_elementos
 
-#CLONE
-receptor = ReceptorDeEstado.from_dict(receptor.to_dict())
-
-receptor.actualizar_template(date.today(),status_tarea.value,otros_argumentos)
-
-if tarea.enviar_mail:
-    logger.info(f"ENVIANDO MAIL...")
-    enviar_mail(receptor)
-    logger.info(f"MAIL ENVIADO CON EXITO")
 ```
 * Toda funcion como primer parametro recibira la tarea del tipo **TareaProgramada** , este objeto contiene toda la info anteriormente mencionada.
 * Como retorno de la funcion, en args siempre se encontrara como primer elemento la fecha y hora de ejecucion, como segundo parametro el status de la tarea ([revisar **status** de tarea](#RECEPTORES%20DE%20ESTADO)) y luego el resto de los elementos de la lista retornada en la funcion.
