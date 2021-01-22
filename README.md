@@ -2,7 +2,7 @@
 
 > Proyecto de ejecucion de tareas asincronas
 
-![alt text](img/python.png)
+![alt text](img/cron-barbarian.jpg)
 
 ## REQUERIMIENTOS
 
